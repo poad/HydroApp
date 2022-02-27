@@ -1,0 +1,15 @@
+{
+  "name": "hydro_app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/poad/hydro_app.git",
+  "author": "Kenji Saito <ken-yo@mbr.nifty.com>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@hydro-sdk/hydro-sdk": "^0.0.1-nightly.459"
+  },
+  "devDependencies": {
+    "typescript": "^4.5.5"
+  }
+}
