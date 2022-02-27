@@ -61,9 +61,6 @@ jobs:
       - name: Install node modules
         run: yarn install
 
-      - name: Test
-        run: yarn test
-
   deploy-ios:
     runs-on: macos-11
 
@@ -93,7 +90,7 @@ jobs:
         if: github.actor != 'dependabot[bot]'
         uses: poad/apple-provisioning-profiles-downloader@v1.0.3
         with: 
-          bundle-id: 'com.github.poad.example.reactjs.native.ReactNativeAppSample'
+          bundle-id: 'com.github.poad.hydroApp'
           profile-type: IOS_APP_STORE
           issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
           api-key-id: ${{ secrets.APPSTORE_KEY_ID }}
@@ -106,7 +103,7 @@ jobs:
         id: buildnumber
         uses: poad/xcode-build-number-auto-update@v1
         with:
-          path: ./ios/ReactNativeAppSample/Info.plist
+          path: ./ios/Runner/Info.plist
           new-number: ${{ github.run_number }}
 
       - name: Generate exportOptions.plist
@@ -198,16 +195,24 @@ jobs:
           restore-keys: |
             ${{ runner.OS }}-archive-cache-
 
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: '2.0.6'
+
+      - name: flutter pub get
+        run: flutter pub get
+          
       - name: pods install
         env:
           RCT_NO_LAUNCH_PACKAGER: 1
+        working-directory: ios
         run: |
-          cd ios
           rm -rf Podfile.lock Pods
           sudo gem install cocoapods && pod install
 
       - name: iOS app build
-        run: flutter build ios
+        run: flutter build ipa --no-tree-shake-icons
 
       - name: iOS app export
         env:
@@ -217,7 +222,7 @@ jobs:
 
       - name: Lookup IPA file
         run: |
-          ipa_file_path=$(pwd)/$(ls ./ios/*.ipa)
+          ipa_file_path=$(pwd)/$(ls ./build/ios/outputs/apk/*.apk)
           if [ -z ${ipa_file_path} ]; then
             echo "IPA file is not found" >2
             exit 1;
@@ -301,11 +306,17 @@ jobs:
 
 
       - name: Build and test for android
-        run: flutter build apk --no-tree-shake-icons
+        run: |
+          flutter pub get && \
+          flutter build apk --no-tree-shake-icons
+
+      - run: |
+          echo ''; \
+          ls build/app/outputs/apk/release
 
       - name: Lookup APK file
         run: |
-          apk_file_path=$(pwd)/$(ls ./android/app/build/outputs/apk/release/*.apk)
+          apk_file_path=$(ls ./build/app/outputs/apk/release/*.apk)
           if [ -z ${apk_file_path} ]; then
             echo "APK file is not found" >2
             exit 1;

@@ -11,5 +11,9 @@
   },
   "devDependencies": {
     "typescript": "^4.5.5"
+  },
+  "resolutions": {
+    "marked": "4.0.10",
+    "ansi-regex": "5.0.1"
   }
 }
