@@ -25,7 +25,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
   build:
     runs-on: macos-11
@@ -38,7 +38,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -110,7 +110,7 @@ jobs:
           flutter-version: '2.0.6'
 
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Generate exportOptions.plist
         if: github.actor != 'dependabot[bot]'
@@ -207,7 +207,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Import Android CodeSign Certificates
         run: |
