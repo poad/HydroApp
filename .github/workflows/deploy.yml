@@ -96,6 +96,16 @@ jobs:
           api-key-id: ${{ secrets.APPSTORE_KEY_ID }}
           api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
 
+      - name: Download Provisioning Profiles (Development)
+        if: github.actor != 'dependabot[bot]'
+        uses: poad/apple-provisioning-profiles-downloader@v1.0.3
+        with: 
+          bundle-id: 'com.github.poad.*'
+          profile-type: DEVELOPMENT
+          issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
+          api-key-id: ${{ secrets.APPSTORE_KEY_ID }}
+          api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
+
       - name: Checkout
         uses: actions/checkout@v3
 
@@ -183,17 +193,23 @@ jobs:
         run: flutter pub get
 
       - name: iOS app build
-        run: flutter build ios --no-tree-shake-icons
+        run: flutter build ios --no-tree-shake-icons --no-codesign
+
+      - name: iOS app build
+        uses: devbotsxyz/xcode-archive@main
+        with:
+          workspace: ios/Runner.xcworkspace
+          scheme: Runner
+          archive-path: ios/Runner.xcarchive
 
       - name: iOS app export
-        working-directory: ios
-        run: |
-          xcodebuild -workspace Runner.xcworkspace -scheme Runner -sdk iphoneos -configuration Release archive -archivePath $(pwd)/build/Runner.xcarchive
-          xcodebuild -exportArchive -archivePath $(pwd)/build/Runner.xcarchive -exportOptionsPlist exportOptions.plist -exportPath $(pwd)/build/Runner.ipa
+        env:
+          RCT_NO_LAUNCH_PACKAGER: 1
+        run: xcodebuild -exportArchive -archivePath ./ios・Runner.xcarchive -exportPath $(pwd)/build/Runner.ipa -exportOptionsPlist exportOptions.plist -allowProvisioningUpdates
 
       - name: Lookup IPA file
         run: |
-          ipa_file_path=$(pwd)/$(ls ./build/ios/outputs/apk/*.apk)
+          ipa_file_path=$(pwd)/build/Runner.ipa
           if [ -z ${ipa_file_path} ]; then
             echo "IPA file is not found" >2
             exit 1;
@@ -275,8 +291,7 @@ jobs:
           distribution: 'zulu'
           java-version: 11
 
-
-      - name: Build and test for android
+      - name: Build for android
         run: |
           flutter pub get && \
           flutter build apk --no-tree-shake-icons
