@@ -21,4 +21,4 @@ doc/api/
 *.js.map
 node_modules
 exportOptions.plist
- 
+.DS_Store
