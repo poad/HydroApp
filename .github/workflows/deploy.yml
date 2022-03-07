@@ -80,15 +80,25 @@ jobs:
       - name: Import iOS CodeSign Certificates
         if: github.actor != 'dependabot[bot]'
         uses: Apple-Actions/import-codesign-certs@v1
+        id: develop-certificate
         with:
           create-keychain: true
-          keychain-password: ${{ steps.develop-certificate.outputs.keychain-password }}
           p12-file-base64: ${{ secrets.DISTRIBUTION_CERTIFICATES_FILE_BASE64 }}
           p12-password: ${{ secrets.CERTIFICATES_PASSWORD }}
 
+      - name: Import iOS CodeSign Certificates (develop)
+        if: github.actor != 'dependabot[bot]'
+        uses: Apple-Actions/import-codesign-certs@v1
+        with:
+          create-keychain: false
+          keychain-password: ${{ steps.develop-certificate.outputs.keychain-password }}
+          p12-file-base64: ${{ secrets.DEVELOPMENT_CERTIFICATES_FILE_BASE64 }}
+          p12-password: ${{ secrets.DEVELOP_CERTIFICATES_PASSWORD }}
+
       - name: Download Provisioning Profiles
         if: github.actor != 'dependabot[bot]'
-        uses: poad/apple-provisioning-profiles-downloader@v1.0.3
+        uses: poad/apple-provisioning-profiles-downloader@v1.0.4
+        id: distributon-profile
         with: 
           bundle-id: 'com.github.poad.hydroApp'
           profile-type: IOS_APP_STORE
@@ -96,15 +106,16 @@ jobs:
           api-key-id: ${{ secrets.APPSTORE_KEY_ID }}
           api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
 
-      # - name: Download Provisioning Profiles (Development)
-      #   if: github.actor != 'dependabot[bot]'
-      #   uses: poad/apple-provisioning-profiles-downloader@v1.0.3
-      #   with: 
-      #     bundle-id: 'com.github.poad.*'
-      #     profile-type: DEVELOPMENT
-      #     issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
-      #     api-key-id: ${{ secrets.APPSTORE_KEY_ID }}
-      #     api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
+      - name: Download Provisioning Profiles (Development)
+        if: github.actor != 'dependabot[bot]'
+        uses: poad/apple-provisioning-profiles-downloader@v1.0.4
+        id: development-profile
+        with: 
+          bundle-id: 'com.github.poad.*'
+          profile-type: DEVELOPMENT
+          issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
+          api-key-id: ${{ secrets.APPSTORE_KEY_ID }}
+          api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
 
       - name: Checkout
         uses: actions/checkout@v3
