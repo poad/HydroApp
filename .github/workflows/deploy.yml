@@ -97,7 +97,7 @@ jobs:
 
       - name: Download Provisioning Profiles
         if: github.actor != 'dependabot[bot]'
-        uses: poad/apple-provisioning-profiles-downloader@v1.0.4
+        uses: poad/apple-provisioning-profiles-downloader@main
         id: distributon-profile
         with: 
           bundle-id: 'com.github.poad.hydroApp'
