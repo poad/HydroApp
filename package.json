@@ -10,7 +10,7 @@
     "@hydro-sdk/hydro-sdk": "^0.0.1-nightly.460"
   },
   "devDependencies": {
-    "typescript": "^4.6.2"
+    "typescript": "latest"
   },
   "resolutions": {
     "marked": "4.0.10",
