@@ -7,7 +7,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@hydro-sdk/hydro-sdk": "^0.0.1-nightly.460"
+    "@hydro-sdk/hydro-sdk": "^0.0.1-nightly.461"
   },
   "devDependencies": {
     "typescript": "latest"
