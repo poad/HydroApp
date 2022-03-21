@@ -44,7 +44,7 @@ jobs:
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
@@ -140,7 +140,7 @@ jobs:
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
@@ -158,7 +158,7 @@ jobs:
         run: yarn install
 
       - name: Configure Homebrew cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             ~/Library/Caches/Homebrew/foo--*
@@ -270,7 +270,7 @@ jobs:
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
@@ -287,7 +287,7 @@ jobs:
       - name: Install node modules
         run: yarn install
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         with:
           path: |
             ~/.gradle/caches
