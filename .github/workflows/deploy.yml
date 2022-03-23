@@ -80,7 +80,7 @@ jobs:
       - name: Import iOS CodeSign Certificates
         if: github.actor != 'dependabot[bot]'
         uses: Apple-Actions/import-codesign-certs@v1
-        id: develop-certificate
+        id: distributon-certificate
         with:
           create-keychain: true
           p12-file-base64: ${{ secrets.DISTRIBUTION_CERTIFICATES_FILE_BASE64 }}
@@ -89,6 +89,7 @@ jobs:
 #      - name: Import iOS CodeSign Certificates (develop)
 #        if: github.actor != 'dependabot[bot]'
 #        uses: Apple-Actions/import-codesign-certs@v1
+#        id: development-certificate
 #        with:
 #          create-keychain: false
 #          keychain-password: ${{ steps.develop-certificate.outputs.keychain-password }}
@@ -116,6 +117,11 @@ jobs:
 #          issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
 #          api-key-id: ${{ secrets.APPSTORE_KEY_ID }}
 #          api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
+
+      - name: debug
+        env:
+          PROFILES: ${{ steps.distributon-profile.outputs.profiles }}
+        run: echo "${PROFILES}"
 
       - name: Checkout
         uses: actions/checkout@v3
