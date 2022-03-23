@@ -312,10 +312,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@hydro-sdk/hydro-sdk@^0.0.1-nightly.461":
-  version "0.0.1-nightly.461"
-  resolved "https://registry.yarnpkg.com/@hydro-sdk/hydro-sdk/-/hydro-sdk-0.0.1-nightly.461.tgz#de5423380895b78b6e2cf15a9ebf74267b98923e"
-  integrity sha512-igKYU4KOSuqH3miL40i6nr2vYmXbtu6A0emCTI8vv/e/7llIxRHlUz+1muucP3U7mFOiGnTFy/daURHZWvoLOQ==
+"@hydro-sdk/hydro-sdk@^0.0.1-nightly.463":
+  version "0.0.1-nightly.463"
+  resolved "https://registry.yarnpkg.com/@hydro-sdk/hydro-sdk/-/hydro-sdk-0.0.1-nightly.463.tgz#b44d01c3092f06b105d3deea04a0582c9228171e"
+  integrity sha512-UlkCEW9IyC15VE+RNGxK5wKxtFiB897HwHnpmIualcsKrdjm385xd6F/QYTK+q7rPxbWYSHbLqZ3VSyaA8M2aA==
   dependencies:
     "@hydro-sdk/waveform" "0.0.1-nightly.48"
     "@types/clear" "^0.1.0"
@@ -343,7 +343,7 @@
     luacodegen "^1.0.2"
     luamin "^1.0.4"
     luaparse "^0.3.0"
-    minimist "^1.2.3"
+    minimist "^1.2.6"
     nexe "^4.0.0-beta.18"
     pkg "^5.0.0"
     prettier "^2.2.0"
@@ -4397,7 +4397,7 @@ minimatch@^3.0.0, minimatch@^3.0.4:
   dependencies:
     brace-expansion "^1.1.7"
 
-minimist@^1.1.0, minimist@^1.1.1, minimist@^1.2.0, minimist@^1.2.3, minimist@^1.2.5:
+minimist@^1.1.0, minimist@^1.1.1, minimist@^1.2.0, minimist@^1.2.3, minimist@^1.2.5, minimist@^1.2.6:
   version "1.2.6"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.6.tgz#8637a5b759ea0d6e98702cfb3a9283323c93af44"
   integrity sha512-Jsjnk4bw3YJqYzbdyBiNsPWHPfO++UGG749Cxs6peCu5Xg4nrena6OVxOYxrQTqww0Jmwt+Ref8rggumkTLz9Q==
