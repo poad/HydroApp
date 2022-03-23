@@ -16,7 +16,7 @@ dependencies:
 
   hydro_sdk: 
     git: 
-      url: git://github.com/hydro-sdk/hydro-sdk.git
+      url: https://github.com/hydro-sdk/hydro-sdk.git
       ref: 0.0.1-nightly.459
 
 dev_dependencies:
