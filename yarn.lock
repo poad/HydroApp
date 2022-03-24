@@ -312,10 +312,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@hydro-sdk/hydro-sdk@^0.0.1-nightly.463":
-  version "0.0.1-nightly.463"
-  resolved "https://registry.yarnpkg.com/@hydro-sdk/hydro-sdk/-/hydro-sdk-0.0.1-nightly.463.tgz#b44d01c3092f06b105d3deea04a0582c9228171e"
-  integrity sha512-UlkCEW9IyC15VE+RNGxK5wKxtFiB897HwHnpmIualcsKrdjm385xd6F/QYTK+q7rPxbWYSHbLqZ3VSyaA8M2aA==
+"@hydro-sdk/hydro-sdk@^0.0.1-nightly.464":
+  version "0.0.1-nightly.464"
+  resolved "https://registry.yarnpkg.com/@hydro-sdk/hydro-sdk/-/hydro-sdk-0.0.1-nightly.464.tgz#372ee40e2f2f2794f5e6d942643520c9c2f8cda3"
+  integrity sha512-R78Waf5zc711M/4gJBLeN3olkDW0nXeX9yzfoPOo6QAqblM+hRPb4xOi5ylP5EZn7+OvRfMLG5/7GuUEAShjBw==
   dependencies:
     "@hydro-sdk/waveform" "0.0.1-nightly.48"
     "@types/clear" "^0.1.0"
