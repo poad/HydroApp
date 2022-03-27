@@ -1,0 +1,99 @@
+name: "deploy (Android)"
+ 
+on:
+  push:
+    branches:
+      - main 
+
+  workflow_dispatch:
+
+permissions: write-all
+
+jobs:
+  deploy-android:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x]
+
+    steps:
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: '2.0.6'
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Import Android CodeSign Certificates
+        run: |
+          ANDROID_CERTIFICATES_FILE_PATH=$(pwd)/android/keystore.p12
+          echo "ANDROID_CERTIFICATES_FILE_PATH=${ANDROID_CERTIFICATES_FILE_PATH}" >> $GITHUB_ENV
+          echo "${{ secrets.ANDROID_CERTIFICATES_FILE_BASE64 }}" | base64 -d > "${ANDROID_CERTIFICATES_FILE_PATH}"
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - uses: actions/cache@v3
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          architecture: x64
+
+      - name: Install node modules
+        run: yarn install
+
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: 11
+
+      - name: Build for android
+        run: |
+          flutter pub get && \
+          flutter build apk --no-tree-shake-icons
+
+      - name: Lookup APK file
+        run: |
+          apk_file_path=$(ls ./build/app/outputs/apk/release/*.apk)
+          if [ -z ${apk_file_path} ]; then
+            echo "APK file is not found" >2
+            exit 1;
+          fi
+          echo "apk_file_path=${apk_file_path}" >> $GITHUB_ENV
+
+      - name: Upload APK file to DeployGate
+        env:
+          FILE_PATH: ${{ env.apk_file_path }}
+        run: |
+          RESULT=$(curl -sSL \
+            -H "Authorization: token ${{ secrets.DEPLOYGATE_API_TOKEN }}" \
+            -F "file=@${FILE_PATH}" \
+            "https://deploygate.com/api/users/poad/apps")
+          echo ${RESULT}
+          ERR=$(echo ${RESULT} | jq -c ".error")
+          if [ "${ERR}" = "true" ]; then
+            echo ${RESULT}
+            exit 1;
+          fi
