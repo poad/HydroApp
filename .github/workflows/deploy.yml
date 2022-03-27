@@ -86,16 +86,6 @@ jobs:
           p12-file-base64: ${{ secrets.DISTRIBUTION_CERTIFICATES_FILE_BASE64 }}
           p12-password: ${{ secrets.CERTIFICATES_PASSWORD }}
 
-#      - name: Import iOS CodeSign Certificates (develop)
-#        if: github.actor != 'dependabot[bot]'
-#        uses: Apple-Actions/import-codesign-certs@v1
-#        id: development-certificate
-#        with:
-#          create-keychain: false
-#          keychain-password: ${{ steps.develop-certificate.outputs.keychain-password }}
-#          p12-file-base64: ${{ secrets.DEVELOPMENT_CERTIFICATES_FILE_BASE64 }}
-#          p12-password: ${{ secrets.DEVELOP_CERTIFICATES_PASSWORD }}
-
       - name: Download Provisioning Profiles
         if: github.actor != 'dependabot[bot]'
         uses: poad/apple-provisioning-profiles-downloader@v1.0.4
@@ -106,22 +96,6 @@ jobs:
           issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
           api-key-id: ${{ secrets.APPSTORE_KEY_ID }}
           api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
-
-#      - name: Download Provisioning Profiles (Development)
-#        if: github.actor != 'dependabot[bot]'
-#        uses: poad/apple-provisioning-profiles-downloader@v1.0.4
-#        id: development-profile
-#        with: 
-#          bundle-id: 'com.github.poad.*'
-#          profile-type: DEVELOPMENT
-#          issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
-#          api-key-id: ${{ secrets.APPSTORE_KEY_ID }}
-#          api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
-
-      - name: debug
-        env:
-          PROFILES: ${{ steps.distributon-profile.outputs.profiles }}
-        run: echo "${PROFILES}"
 
       - name: Checkout
         uses: actions/checkout@v3
@@ -209,7 +183,7 @@ jobs:
       - name: flutter pub get
         run: flutter pub get
 
-      - name: iOS app build
+      - name: iOS app build (flutter)
         run: flutter build ios --no-tree-shake-icons --no-codesign
 
       - name: iOS app build
@@ -222,16 +196,13 @@ jobs:
       - name: iOS app export
         env:
           RCT_NO_LAUNCH_PACKAGER: 1
-        run: xcodebuild -exportArchive -archivePath ./ios・Runner.xcarchive -exportPath $(pwd)/build/Runner.ipa -exportOptionsPlist exportOptions.plist -allowProvisioningUpdates
+        run: xcodebuild -exportArchive -archivePath ./ios/Runner.xcarchive -exportPath $(pwd)/build/Runner.ipa -exportOptionsPlist exportOptions.plist -allowProvisioningUpdates
+
+      - name: IPA file detail
+        run: ls -l $(pwd)/build/Runner.ipa
 
       - name: Lookup IPA file
-        run: |
-          ipa_file_path=$(pwd)/build/Runner.ipa
-          if [ -z ${ipa_file_path} ]; then
-            echo "IPA file is not found" >2
-            exit 1;
-          fi
-          echo "ipa_file_path=${ipa_file_path}" >> $GITHUB_ENV
+        run: echo "ipa_file_path=$(pwd)/build/Runner.ipa" >> $GITHUB_ENV
 
       - name: Upload IPA file to DeployGate
         env:
