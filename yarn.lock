@@ -1163,7 +1163,7 @@ braces@^2.3.1:
     split-string "^3.0.2"
     to-regex "^3.0.1"
 
-braces@^3.0.1, braces@~3.0.2:
+braces@^3.0.1, braces@^3.0.2, braces@~3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/braces/-/braces-3.0.2.tgz#3454e1a462ee8d599e236df336cd9ea4f8afe107"
   integrity sha512-b8um+L1RzM3WDSzvhm6gIz1yfTbBt6YTlcEKAvsmqCZZFw46z626lVj9j1yEPW33H5H+lBQpZMP1k8l+78Ha0A==
@@ -4310,13 +4310,21 @@ micromatch@^3.1.4:
     snapdragon "^0.8.1"
     to-regex "^3.0.2"
 
-micromatch@^4.0.2, micromatch@^4.0.4:
+micromatch@^4.0.2:
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-4.0.4.tgz#896d519dfe9db25fce94ceb7a500919bf881ebf9"
   integrity sha512-pRmzw/XUcwXGpD9aI9q/0XOwLNygjETJ8y0ao0wdqprrzDa4YnxLcz7fQRZr8voh8V10kGhABbNcHVk5wHgWwg==
   dependencies:
     braces "^3.0.1"
     picomatch "^2.2.3"
+
+micromatch@^4.0.4:
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-4.0.5.tgz#bc8999a7cbbf77cdc89f132f6e467051b49090c6"
+  integrity sha512-DMy+ERcEW2q8Z2Po+WNXuw3c5YaUSFjAO5GsJqfEl7UjvtIuFKO6ZrKvcItdy98dwFI2N1tg3zNIdKaQT+aNdA==
+  dependencies:
+    braces "^3.0.2"
+    picomatch "^2.3.1"
 
 miller-rabin@^4.0.0:
   version "4.0.1"
@@ -4915,7 +4923,7 @@ picocolors@^1.0.0:
   resolved "https://registry.yarnpkg.com/picocolors/-/picocolors-1.0.0.tgz#cb5bdc74ff3f51892236eaf79d68bc44564ab81c"
   integrity sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==
 
-picomatch@^2.0.4, picomatch@^2.2.1, picomatch@^2.2.3:
+picomatch@^2.0.4, picomatch@^2.2.1, picomatch@^2.2.3, picomatch@^2.3.1:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/picomatch/-/picomatch-2.3.1.tgz#3ba3833733646d9d3e4995946c1365a67fb07a42"
   integrity sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==
@@ -4959,10 +4967,10 @@ pkg-dir@^4.2.0:
   dependencies:
     find-up "^4.0.0"
 
-pkg-fetch@3.2.6:
-  version "3.2.6"
-  resolved "https://registry.yarnpkg.com/pkg-fetch/-/pkg-fetch-3.2.6.tgz#8473e1da5763522c4c3c051917db7274b75836fa"
-  integrity sha512-Q8fx6SIT022g0cdSE4Axv/xpfHeltspo2gg1KsWRinLQZOTRRAtOOaEFghA1F3jJ8FVsh8hGrL/Pb6Ea5XHIFw==
+pkg-fetch@3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/pkg-fetch/-/pkg-fetch-3.3.0.tgz#3afc2fb7a19219839cf75654fa8b54a2630df891"
+  integrity sha512-xJnIZ1KP+8rNN+VLafwu4tEeV4m8IkFBDdCFqmAJz9K1aiXEtbARmdbEe6HlXWGSVuShSHjFXpfkKRkDBQ5kiA==
   dependencies:
     chalk "^4.1.2"
     fs-extra "^9.1.0"
@@ -4974,9 +4982,9 @@ pkg-fetch@3.2.6:
     yargs "^16.2.0"
 
 pkg@^5.0.0:
-  version "5.5.2"
-  resolved "https://registry.yarnpkg.com/pkg/-/pkg-5.5.2.tgz#c21ca9b5cb48feceb3b158c17df855ada350086d"
-  integrity sha512-pD0UB2ud01C6pVv2wpGsTYJrXI/bnvGRYvMLd44wFzA1p+A2jrlTGFPAYa7YEYzmitXhx23PqalaG1eUEnSwcA==
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/pkg/-/pkg-5.6.0.tgz#53d2616491e429db293d93d474e69ca3dc0f281d"
+  integrity sha512-mHrAVSQWmHA41RnUmRpC7pK9lNnMfdA16CF3cqOI22a8LZxOQzF7M8YWtA2nfs+d7I0MTDXOtkDsAsFXeCpYjg==
   dependencies:
     "@babel/parser" "7.16.2"
     "@babel/types" "7.16.0"
@@ -4987,7 +4995,7 @@ pkg@^5.0.0:
     into-stream "^6.0.0"
     minimist "^1.2.5"
     multistream "^4.1.0"
-    pkg-fetch "3.2.6"
+    pkg-fetch "3.3.0"
     prebuild-install "6.1.4"
     progress "^2.0.3"
     resolve "^1.20.0"
