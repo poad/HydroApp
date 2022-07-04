@@ -6,7 +6,7 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
   flutter:
@@ -17,7 +17,7 @@ dependencies:
   hydro_sdk: 
     git: 
       url: https://github.com/hydro-sdk/hydro-sdk.git
-      ref: 0.0.1-nightly.459
+      ref: 0.0.1-nightly.464
 
 dev_dependencies:
   flutter_test:
